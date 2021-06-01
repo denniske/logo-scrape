@@ -5,8 +5,12 @@ export class Helpers {
     }
 
     public static findJsonLdImages(text: string): any {
-        const info = JSON.parse(text);
-        return info ? info.logo : null;
+        try {
+            const info = JSON.parse(text);
+            return info ? info.logo : null;
+        } catch {
+            return null;
+        }
     }
 
     public static svgToDataURL(svgStr: string) {
