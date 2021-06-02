@@ -29,7 +29,7 @@
     "scripts": {
         "start-example": "npm run build && ts-node ./examples/test.ts",
         "example": "ts-node ./lib/test.ts",
-        "prepare": "npm run lint && npm run build && npm run doc && npm run before-stage",
+        "prepare": "npm run build && npm run doc && npm run before-stage",
         "lint": "tslint -p .",
         "lint-fix": "tslint -p . --fix",
         "build": "rm -rf ./dist && tsc",
