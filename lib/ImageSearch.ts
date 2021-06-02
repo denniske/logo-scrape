@@ -1,11 +1,33 @@
 import cheerio = require('cheerio');
 import { Helpers } from './Helpers';
-import { HtmlLoader } from './HtmlLoader';
+import { HtmlLoader, HtmlResponse } from './HtmlLoader';
+import * as Url from 'url';
 
 export interface ImageData {
     type: string;
     size?: string;
     url: string;
+}
+
+interface IImage {
+    url: string;
+}
+
+function makeUrl(response: HtmlResponse, image: IImage) {
+    const url = Url.parse(response.url);
+
+    // console.log(url);
+    // console.log(image);
+
+    if (image.url.startsWith('//')) {
+        return url.protocol + '' + image.url;
+    }
+
+    if (image.url.startsWith('/')) {
+        return url.protocol + '//' + url.host + image.url;
+    }
+
+    return response.url + image.url;
 }
 
 export class ImageSearch {
@@ -44,7 +66,7 @@ export class ImageSearch {
             return !Helpers.validUrl(image.url) && image.url.indexOf('data:') === -1
                 ? {
                       ...image,
-                      url: response.url + image.url,
+                      url: makeUrl(response, image),
                   }
                 : image;
         });

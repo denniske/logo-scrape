@@ -1,6 +1,6 @@
 import got = require('got');
 
-interface HtmlResponse {
+export interface HtmlResponse {
     html: string;
     url: string;
 }
